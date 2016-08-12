@@ -3,7 +3,6 @@ package com.sugarware.tweebot.api.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.sugarware.tweebot.api.entity.AccessToken;
+import com.sugarware.tweebot.api.entity.Subscription;
 import com.sugarware.tweebot.api.repository.AccessTokenRepository;
+import com.sugarware.tweebot.api.repository.SubscriptionRepository;
 import com.sugarware.tweebot.api.service.TwitterUserService;
 import com.sugarware.tweebot.api.util.ParamMapper;
 import com.sugarware.tweebot.api.util.RequestSigner;
@@ -35,6 +36,9 @@ public class TwitterUserController {
 
 	@Autowired
 	private AccessTokenRepository accessTokenRepository;
+
+	@Autowired
+	private SubscriptionRepository subscriptionRepository;
 
 	@Autowired
 	private TwitterUserService twitterUserService;
@@ -63,12 +67,19 @@ public class TwitterUserController {
 		AccessToken token = new AccessToken(userId, new_oauth_token, oauth_token_secret);
 		accessTokenRepository.save(token);
 
+		Subscription subscription = new Subscription(userId, 3);
+		try {
+			subscriptionRepository.save(subscription);
+		} catch (Exception e) {
+			// doesn't matter
+		}
+
 		System.out.println("NEW ACC: " + new_oauth_token.equals(oauth_token));
 
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Location", "http://localhost:3000");
 		responseHeaders.add(HttpHeaders.SET_COOKIE, "oauth_token=" + new_oauth_token + "; PATH=/");
-		responseHeaders.add(HttpHeaders.SET_COOKIE, "userId=" + userId +"; PATH=/");
+		responseHeaders.add(HttpHeaders.SET_COOKIE, "userId=" + userId + "; PATH=/");
 		return new ResponseEntity<byte[]>(null, responseHeaders, HttpStatus.FOUND);
 	}
 

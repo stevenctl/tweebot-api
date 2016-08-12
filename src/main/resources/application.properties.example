@@ -1,5 +1,5 @@
-twitter.consumerKey=bj5kxze1qiJJjOdYoKykQO3an
-twitter.secretKey=M583wXC5Zby8ZPyNDGjb7AEUAI1xQKOC7zz4dBxEEnzVgpS653
+twitter.consumerKey=cq7s0ZPxRSRgDQ6L856WnmheS
+twitter.secretKey=vKv84s8F3xmI5bnQyInZYG6EC8PUjIIDXXDCYCfsN196tm9EHA
 
 spring.datasource.url=jdbc:mysql://localhost/twitterbot
 spring.datasource.username=tbservice
