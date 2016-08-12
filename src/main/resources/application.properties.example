@@ -1,14 +1,17 @@
-twitter.consumerKey=cq7s0ZPxRSRgDQ6L856WnmheS
-twitter.secretKey=vKv84s8F3xmI5bnQyInZYG6EC8PUjIIDXXDCYCfsN196tm9EHA
+#call the real one 'application.properties'
 
-spring.datasource.url=jdbc:mysql://localhost/twitterbot
-spring.datasource.username=tbservice
-spring.datasource.password=twittermation
+twitter.consumerKey=#shhhh
+twitter.secretKey=#shhhh
+
+spring.datasource.url=jdbc:mysql://dbhost/dbname
+spring.datasource.username=dbuser
+spring.datasource.password=dbpassword123
 spring.datasource.driver-class-name=com.mysql.jdbc.Driver
 
 hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
 hibernate.show_sql=false
-#uncomment for adding new entities 
+
+#change to create for adding new entities 
 hibernate.hbm2ddl.auto=update
 
 entitymanager.packagesToScan=com.sugarware.tweebot.api.entity

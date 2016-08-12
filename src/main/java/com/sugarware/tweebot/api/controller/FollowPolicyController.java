@@ -40,6 +40,10 @@ public class FollowPolicyController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Oauth tokens don't match user id.");
 		}
 
+		if(!validationService.isAlphanumericWord(hashtag)){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("hashstag must be one alphanumeric word.");
+		}
+		
 		Iterable<FollowPolicy> userPolicies = followPolicyRepository.findByUserId(userId);
 		for (FollowPolicy p : userPolicies) {
 			if (p.getHashtag().equals(hashtag)) {

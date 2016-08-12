@@ -27,4 +27,8 @@ public class ValidationService {
 		return true;
 	}
 
+	public boolean isAlphanumericWord(String s) {
+		String pattern = "^[a-zA-Z0-9]*$";
+		return s.matches(pattern);
+	}
 }
