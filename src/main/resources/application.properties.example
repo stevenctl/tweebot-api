@@ -16,4 +16,7 @@ hibernate.hbm2ddl.auto=update
 
 entitymanager.packagesToScan=com.sugarware.tweebot.api.entity
 
+callbackurl=http://localhost:8080/tweebot/connect/twitter/postAuth
+homepageurl=http://localhost:3000
+
 server.port=8080

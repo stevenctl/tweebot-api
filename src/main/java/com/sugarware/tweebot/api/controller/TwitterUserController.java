@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -43,6 +44,9 @@ public class TwitterUserController {
 	@Autowired
 	private TwitterUserService twitterUserService;
 
+	@Autowired
+	private Environment env;
+	
 	@RequestMapping(value = "/postAuth", method = RequestMethod.GET)
 	public ResponseEntity<?> redirectWithCookies(@RequestParam String oauth_token,
 			@RequestParam String oauth_verifier) {
@@ -77,7 +81,7 @@ public class TwitterUserController {
 		System.out.println("NEW ACC: " + new_oauth_token.equals(oauth_token));
 
 		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.add("Location", "http://localhost:3000");
+		responseHeaders.add("Location", env.getProperty("homepageurl"));
 		responseHeaders.add(HttpHeaders.SET_COOKIE, "oauth_token=" + new_oauth_token + "; PATH=/");
 		responseHeaders.add(HttpHeaders.SET_COOKIE, "userId=" + userId + "; PATH=/");
 		return new ResponseEntity<byte[]>(null, responseHeaders, HttpStatus.FOUND);
@@ -87,7 +91,7 @@ public class TwitterUserController {
 	public ResponseEntity<?> getAuthUrl() {
 		String url = "https://api.twitter.com/oauth/request_token";
 		Map<String, String> params = new HashMap<>();
-		params.put("oauth_callback", "http://localhost:8080/tweebot/connect/twitter/postAuth");
+		params.put("oauth_callback", env.getProperty("callbackurl"));
 		String authHeader = requestSigner.getAuthorizationHeader(url, HttpMethod.POST, params, null, null);
 
 		HttpHeaders headers = new HttpHeaders();

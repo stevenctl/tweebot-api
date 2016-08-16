@@ -32,18 +32,19 @@ public class LikePolicyController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<?> addLikePolicy(@RequestHeader HttpHeaders requestHeaders, @RequestParam String hashtag) {
 		long userId = Long.parseLong(requestHeaders.get("userId").get(0));
+
 		String oauth_token = requestHeaders.get("oauth_token").get(0);
 		AccessToken accessToken = accessTokenRepository.findByUserId(userId);
+		System.out.println("USER ID: " + userId + " isNulll: " + (accessToken == null));
 		String oauth_token_secret = accessToken.getOauth_token_secret();
 
 		if (!validationService.doesUserMatchToken(userId, oauth_token, oauth_token_secret)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Oauth tokens don't match user id.");
 		}
-		
-		if(!validationService.isAlphanumericWord(hashtag)){
+
+		if (!validationService.isAlphanumericWord(hashtag)) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("hashstag must be one alphanumeric word.");
 		}
-
 		Iterable<LikePolicy> userPolicies = likePolicyRepository.findByUserId(userId);
 		for (LikePolicy p : userPolicies) {
 			if (p.getHashtag().equals(hashtag)) {
