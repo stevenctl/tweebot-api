@@ -31,4 +31,9 @@ public class ValidationService {
 		String pattern = "^[a-zA-Z0-9]*$";
 		return s.matches(pattern);
 	}
+	
+	public boolean isNumeric(String s){
+		String pattern = "^[0-9]*$";
+		return s.matches(pattern);
+	}
 }
