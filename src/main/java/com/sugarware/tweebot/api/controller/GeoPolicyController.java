@@ -30,7 +30,7 @@ public class GeoPolicyController {
 	private GeoPolicyRepository geoPolicyRepository;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<?> getGeoPolicy(@RequestHeader HttpHeaders requestHeaders, @RequestParam String hashtag) {
+	public ResponseEntity<?> getGeoPolicy(@RequestHeader HttpHeaders requestHeaders) {
 		long userId = Long.parseLong(requestHeaders.get("userId").get(0));
 		String oauth_token = requestHeaders.get("oauth_token").get(0);
 		AccessToken accessToken = accessTokenRepository.findByUserId(userId);
