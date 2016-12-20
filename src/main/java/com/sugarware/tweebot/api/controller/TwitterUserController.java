@@ -71,7 +71,7 @@ public class TwitterUserController {
 		AccessToken token = new AccessToken(userId, new_oauth_token, oauth_token_secret);
 		accessTokenRepository.save(token);
 
-		Subscription subscription = new Subscription(userId, 3);
+		Subscription subscription = new Subscription(userId, 0);
 		try {
 			subscriptionRepository.save(subscription);
 		} catch (Exception e) {
