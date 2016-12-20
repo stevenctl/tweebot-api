@@ -75,7 +75,7 @@ public class TwitterUserController {
 		try {
 			subscriptionRepository.save(subscription);
 		} catch (Exception e) {
-			// doesn't matter
+			e.printStackTrace();
 		}
 
 		System.out.println("NEW ACC: " + new_oauth_token.equals(oauth_token));
