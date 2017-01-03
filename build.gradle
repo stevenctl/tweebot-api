@@ -44,7 +44,7 @@ dependencies {
 	compile('org.apache.commons:commons-lang3:3.4')
 	compile('org.twitter4j:twitter4j-core:4.0.4')
 	compile group: 'org.json', name: 'json', version: '20160212'
-	
+	compile "com.stripe:stripe-java:3.5.0"
 	
 	//---- TEST ----
 	testCompile('org.springframework.boot:spring-boot-starter-test') 

@@ -119,5 +119,19 @@ public class TwitterUserController {
 
 		return response;
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "subInfo")
+	public ResponseEntity<?> getSubscriptionInfo(@RequestHeader HttpHeaders requestHeaders) {
+		long userId = Long.parseLong(requestHeaders.get("userId").get(0));
+		Subscription sub = subscriptionRepository.findByUserId(userId);
+		if(sub != null){
+			Map<String, Long> resBody = new HashMap<>();
+			resBody.put("id", userId);
+			resBody.put("tier", (long)sub.getSubscription());
+			return ResponseEntity.ok(resBody);
+		}else{
+			return ResponseEntity.notFound().build();
+		}
+	}
 
 }

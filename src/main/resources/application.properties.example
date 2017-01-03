@@ -3,6 +3,9 @@
 twitter.consumerKey=#shhhh
 twitter.secretKey=#shhhh
 
+stripe.publicKey=#shhhh
+stripe.secretKey=#shhhh
+
 spring.datasource.url=jdbc:mysql://dbhost/dbname
 spring.datasource.username=dbuser
 spring.datasource.password=dbpassword123
