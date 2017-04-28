@@ -9,12 +9,11 @@ import java.util.Map;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
-
-import sun.misc.BASE64Encoder;
 
 @Service
 public class RequestSigner {
@@ -45,7 +44,7 @@ public class RequestSigner {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return new BASE64Encoder().encode(byteHMAC);
+		return Base64.encodeBase64String(byteHMAC);
 	}
 
 	public String getAuthorizationHeader(String url, HttpMethod method, Map<String, String> paramsMap,

@@ -46,7 +46,7 @@ public class TwitterUserController {
 
 	@Autowired
 	private Environment env;
-	
+
 	@RequestMapping(value = "/postAuth", method = RequestMethod.GET)
 	public ResponseEntity<?> redirectWithCookies(@RequestParam String oauth_token,
 			@RequestParam String oauth_verifier) {
@@ -71,13 +71,15 @@ public class TwitterUserController {
 		AccessToken token = new AccessToken(userId, new_oauth_token, oauth_token_secret);
 		accessTokenRepository.save(token);
 
-		Subscription subscription = new Subscription(userId, 0);
-		try {
-			subscriptionRepository.save(subscription);
-		} catch (Exception e) {
-			e.printStackTrace();
+		Subscription subscription = subscriptionRepository.findByUserId(userId);
+		if (subscription == null) {
+			try {
+				subscription = new Subscription(userId, 0);
+				subscriptionRepository.save(subscription);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-
 		System.out.println("NEW ACC: " + new_oauth_token.equals(oauth_token));
 
 		HttpHeaders responseHeaders = new HttpHeaders();
@@ -119,17 +121,17 @@ public class TwitterUserController {
 
 		return response;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET, value = "subInfo")
 	public ResponseEntity<?> getSubscriptionInfo(@RequestHeader HttpHeaders requestHeaders) {
 		long userId = Long.parseLong(requestHeaders.get("userId").get(0));
 		Subscription sub = subscriptionRepository.findByUserId(userId);
-		if(sub != null){
+		if (sub != null) {
 			Map<String, Long> resBody = new HashMap<>();
 			resBody.put("id", userId);
-			resBody.put("tier", (long)sub.getSubscription());
+			resBody.put("tier", (long) sub.getSubscription());
 			return ResponseEntity.ok(resBody);
-		}else{
+		} else {
 			return ResponseEntity.notFound().build();
 		}
 	}
